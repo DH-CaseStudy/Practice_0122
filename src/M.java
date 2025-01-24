@@ -1,6 +1,7 @@
 
 class Calculation {
     int a = 20;
+
     int b = 10;
 
     void addition() {

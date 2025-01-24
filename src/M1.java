@@ -25,6 +25,7 @@ class SubSon extends SubFather {
 
 public class M1 {
     public static void main(String[] args) {
+
         SubSon objson = new SubSon();
         objson.printSon();
         objson.printFather();
