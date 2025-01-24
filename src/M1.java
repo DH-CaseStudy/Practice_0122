@@ -1,3 +1,5 @@
+
+
 class GrandFather {
     void printGrandFather() {
         System.out.println("나는 할아버지입니다.");
@@ -10,8 +12,7 @@ class SubFather extends GrandFather {
     String houseAddress = "인천";
 
     void printFather() {
-        System.out.println("나의 아버지는 " + familyName);
-        System.out.println("나의 집은" + houseAddress);
+
         System.out.println("나는 아버지 입니다! 나는 할아버지로부터 상속받습니다.");
 
     }
@@ -29,6 +30,8 @@ public class M1 {
 
         SubSon objson = new SubSon();
         objson.printSon();
+        System.out.println("나의 아버지는 "+objson.familyName);
+        System.out.println("나의 집은 "+objson.houseAddress);
         objson.printFather();
         objson.printGrandFather();
     }
