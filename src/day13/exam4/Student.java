@@ -23,6 +23,6 @@ public class Student {
     }
 
     public void print(){
-        System.out.println(name + " 씨의 광정명은 " + subject + " 이고 교육비는 " + fee + " 이며 환급금은 " + returnFee +" 입니다.");
+        System.out.println(name + " 씨의 과정명은 " + subject + " 이고 교육비는 " + fee + " 이며 환급금은 " + returnFee +" 입니다.");
     }
 }
