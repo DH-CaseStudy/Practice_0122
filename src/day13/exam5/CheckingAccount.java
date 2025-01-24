@@ -18,7 +18,7 @@ public class CheckingAccount extends Account{
     }
 
     public void pay(long amount, String cardNo){
-        if(this.cardNo.equals(cardNo)){
+        if(this.cardNo.equals(cardNo) && balance >= amount){
             balance -= amount;
             System.out.println("현재잔액====>" + balance);
         } else{
