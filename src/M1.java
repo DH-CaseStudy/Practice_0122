@@ -13,6 +13,7 @@ class SubFather extends GrandFather {
         System.out.println("나의 아버지는 " + familyName);
         System.out.println("나의 집은" + houseAddress);
         System.out.println("나는 아버지 입니다! 나는 할아버지로부터 상속받습니다.");
+
     }
 }
 

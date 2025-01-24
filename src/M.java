@@ -11,6 +11,7 @@ class Calculation {
     void subtraction() {
         System.out.println("두 수의 뺄셈 : " + (a - b));
 
+
     }
 
 }
