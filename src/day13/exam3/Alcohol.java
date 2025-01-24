@@ -6,8 +6,11 @@ public class Alcohol extends Drink{
     int count;
     double alcper;
 
-    public Alcohol(){
-        this.alcper = 15.1;
+    public Alcohol(String name, int price, int count, double alcper){
+        this.name = name;
+        this.price = price;
+        this.count = count;
+        this.alcper = alcper;
     }
 
     public double getAlcper() {
@@ -18,16 +21,12 @@ public class Alcohol extends Drink{
         return this.price * this.count;
     }
 
-    @Override
-    public void printTitle() {
+    public static void printTitle() {
         System.out.println("상품명(도수[%])   단가   수량   금액");
     }
 
-    @Override
-    public void printData(String _name, int _price, int _count) {
-        this.name = _name;
-        this.price = _price;
-        this.count = _count;
+    public void printData() {
+
         System.out.println(this.name + "(" + alcper + ")" + "   " + this.price + "     " + this.count + "    " +  getTotalPrice());
     }
 }

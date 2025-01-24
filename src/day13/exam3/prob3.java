@@ -1,22 +1,27 @@
 package day13.exam3;
 
 public class prob3 {
-    public static void main(String[] args) {
-        Drink drink = new Drink();
-        int sum = 0;
+    public static void main(String[] args){
 
-        drink.printTitle();
-        drink.printData("커피", 1500, 4);
-        sum += drink.getTotalPrice();
-        drink.printData("녹차", 1100, 7);
-        sum += drink.getTotalPrice();
+		Drink coffee = new Drink("커피",1500,4);
+		Drink tea = new Drink("녹차",1100,7);
+		Alcohol wine = new Alcohol("와인", 5000, 3, 15.1);
 
-        Alcohol alcohol = new Alcohol();
+		System.out.println("***** 매 출 전 표 ***** ");
+		Drink.printTitle();
+		coffee.printData();
+		tea.printData();
+		System.out.println();
 
-        alcohol.printTitle();
-        alcohol.printData("와인", 5000, 3);
-        sum += alcohol.getTotalPrice();
+		Alcohol.printTitle();
+		wine.printData();
 
-        System.out.println("*** 총금액" + sum + " ***");
-    }
+		int sum = coffee.getTotalPrice()
+				  + tea.getTotalPrice()
+				  + wine.getTotalPrice();
+
+		System.out.println();
+		System.out.println("*** 총금액 " + sum + "원 ***");
+
+	}
 }

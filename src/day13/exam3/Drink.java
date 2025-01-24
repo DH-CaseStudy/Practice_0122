@@ -19,15 +19,12 @@ public class Drink {
         return this.price * this.count;
     }
 
-    public void printTitle(){
+    public static void printTitle(){
         System.out.println("***** 매출전표 *****");
         System.out.println("상품명   단가   수량   금액");
     }
 
-    public void printData(String _name, int _price, int _count){
-        this.name = _name;
-        this.price = _price;
-        this.count = _count;
+    public void printData(){
         System.out.println(this.name + "   " + this.price + "     " + this.count + "    " +  getTotalPrice());
     }
 }
