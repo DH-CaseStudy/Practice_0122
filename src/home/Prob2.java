@@ -16,6 +16,7 @@ public class Prob2 {
 		booklist[3] = book4;
 		booklist[4] = book5;
 
+
 		BookMgr mgr = new BookMgr(booklist);
 		System.out.println("=== 책 목록 ===");
 		mgr.printBooklist();
