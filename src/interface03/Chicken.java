@@ -1,18 +1,20 @@
 package interface03;
 
 public class Chicken extends Animal implements Cheatable {
+    private boolean isFlying = false;
+
     public Chicken(int speed) {
         super(speed);
     }
 
     @Override
     void run(int hours) {
-        setDistance(this.getSpeed() * hours);
+        setDistance(getDistance() + getSpeed() * hours);
+
     }
 
     @Override
     public void fly() {
-        setSpeed(this.getSpeed()*2);
-
+        setSpeed(getSpeed() * 2);
     }
 }

@@ -8,7 +8,7 @@ public class Dog extends Animal {
 
     @Override
     void run(int hours) {
-        setDistance((this.getSpeed()*hours)/2.0);
+        setDistance(getDistance() + (this.getSpeed()*hours)/2.0);
 
     }
 }
