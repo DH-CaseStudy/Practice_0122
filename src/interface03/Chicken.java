@@ -1,7 +1,6 @@
 package interface03;
 
 public class Chicken extends Animal implements Cheatable {
-    private boolean isFlying = false;
 
     public Chicken(int speed) {
         super(speed);
