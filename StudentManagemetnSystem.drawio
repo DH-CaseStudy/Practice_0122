@@ -136,18 +136,6 @@
         <mxCell id="o_LtBYVK2ZJKB_Pog53U-61" value="+ print(Student student): void&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="o_LtBYVK2ZJKB_Pog53U-58" vertex="1">
           <mxGeometry y="60" width="180" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="o_LtBYVK2ZJKB_Pog53U-69" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="990" y="330" as="sourcePoint" />
-            <mxPoint x="1040" y="280" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="PuucEjaQ31ReUiQEuABG-1" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="290" y="400" as="sourcePoint" />
-            <mxPoint x="340" y="350" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
