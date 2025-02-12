@@ -51,30 +51,21 @@ public class Main {
 
                         StudentDTO student = new StudentDTO(sno, name, korean, english, math, science, total, average, grade);
                         StudentManager.getInstance().saveStudentFromDB(student);
-                        System.out.println(" 학생 정보가 DB에 저장되었습니다.");
                     }
 
                     case 2 -> {
                         StudentManager.getInstance().loadStudentsFromDB();
-
-                        for(StudentDTO student : StudentManager.getInstance().getStudents()){
-                            System.out.println(student.toString());
-                        }
                     }
                     case 3 -> {
                         System.out.println("학번을 입력하세요.");
                         String sno = br.readLine();
                         StudentManager.getInstance().searchStudentFromDB(sno);
-
-                        System.out.println(StudentManager.getInstance().getStudent());
                     }
                     case 4 -> {
                         StudentManager.getInstance().sortBySnoFromDB();
-                        System.out.println(StudentManager.getInstance().getStudents());
                     }
                     case 5 -> {
                         StudentManager.getInstance().sortByTotalFromDB();
-                        System.out.println(StudentManager.getInstance().getStudents());
                     }
                     case 6 -> {
                         System.out.println("삭제");

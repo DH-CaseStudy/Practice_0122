@@ -1,6 +1,8 @@
 package StudentManagementSystem.service;
 import StudentManagementSystem.dao.StudentDBIO;
 import StudentManagementSystem.dto.StudentDTO;
+import StudentManagementSystem.io.StudentIO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +10,11 @@ public class StudentManager {
     private static StudentManager instance;
 
     private List<StudentDTO> students;
-    private StudentDTO student;
+
+    private final StudentDBIO studentDBIO;
 
     public StudentManager() {
+        studentDBIO = new StudentDBIO(); //싱글톤이니까 단 하나의 객체.
         students = new ArrayList<>();
     }
 
@@ -30,32 +34,31 @@ public class StudentManager {
         this.students = students;
     }
 
-    public StudentDTO getStudent() {
-        return student;
-    }
 
     public void sortBySnoFromDB(){
         students.clear();
-        this.students = StudentDBIO.getInstance().sortBySno();
+        studentDBIO.sortBySno();
     }
 
     public void sortByTotalFromDB(){
         students.clear();
-        this.students = StudentDBIO.getInstance().sortByTotal();
+        studentDBIO.sortByTotal();
     }
 
     public void searchStudentFromDB(String sno){
-        this.student = StudentDBIO.getInstance().search(sno);
+         studentDBIO.search(sno);
+
     }
 
     public void loadStudentsFromDB() {
         students.clear();//갱신하기 위해 담겨있는 데이터를 비운다.
-        this.students = StudentDBIO.getInstance().loadStudentData(); // DBIO로 부터 조회를 요청하고 반환된 리스트를 직접 저장
+        // DBIO로 부터 조회를 요청하고 반환된 리스트를 직접 저장
+        studentDBIO.output();
 
     }
 
     public void saveStudentFromDB(StudentDTO studentDTO){
-        this.student = StudentDBIO.getInstance().saveStudentData(studentDTO);
+        studentDBIO.input(studentDTO);
     }
 
 }

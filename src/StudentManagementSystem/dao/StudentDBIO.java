@@ -13,20 +13,11 @@ import java.util.List;
 
 public class StudentDBIO implements StudentIO {
 
-    //DAO의 역할을 하니까 객체가 전역에 단 하나만 존재하는 것이 맞지 않을까? => 싱글톤
-    private static StudentDBIO instance;
 
-    private StudentDBIO(){}
-
-    public static StudentDBIO getInstance() {
-        if (instance == null) {
-            instance = new StudentDBIO();
-        }
-        return instance;
-    }
+    public StudentDBIO(){}
 
     @Override
-    public StudentDTO saveStudentData(StudentDTO student) {
+    public StudentDTO input(StudentDTO student) {
         StudentDTO studentDTO = student;
         //DB Create
         String sql = "INSERT INTO STUDENT (sno, name, korean, english, math, science, total, average, grade) " +
@@ -47,7 +38,8 @@ public class StudentDBIO implements StudentIO {
 
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("✅ 학생 정보 저장 완료: " + student.getName());
+                System.out.println("학생 정보 저장 완료");
+                System.out.println(student);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,7 +49,7 @@ public class StudentDBIO implements StudentIO {
     }
 
     @Override
-    public List<StudentDTO> loadStudentData() {
+    public List<StudentDTO> output() {
         //DB Read
         List<StudentDTO> students = new ArrayList<>();
         String sql = "SELECT sno, name, korean, english, math, science, total, average, grade FROM STUDENT";
@@ -85,7 +77,8 @@ public class StudentDBIO implements StudentIO {
             }
 
 
-            System.out.println("✅ DB에서 학생 정보 로드 완료! 총 " + students.size() + "명");
+            System.out.println("DB에서 학생 정보 로드 완료! 총 ");
+            System.out.println(students);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -116,7 +109,8 @@ public class StudentDBIO implements StudentIO {
                         rs.getString("grade")
                 );
 
-                System.out.println("✅ 학생 정보 조회 성공: " + student);
+                System.out.println("학생 정보 조회 성공: ");
+                System.out.println(student);
             } else {
                 System.out.println("❌ 해당 학번을 가진 학생이 없습니다.");
             }
@@ -150,7 +144,8 @@ public class StudentDBIO implements StudentIO {
                 ));
             }
 
-            System.out.println("✅ 학번 순 정렬 완료!");
+            System.out.println("학번 순 정렬 완료!");
+            System.out.println(students);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -182,24 +177,12 @@ public class StudentDBIO implements StudentIO {
                 ));
             }
 
-            System.out.println("✅ 성적 순 정렬 완료!");
+            System.out.println("성적 순 정렬 완료!");
+            System.out.println(students);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return students;
-    }
-
-
-
-
-    @Override
-    public void input(StudentDTO studentDTO) {
-        //File write...
-    }
-
-    @Override
-    public void output(StudentDTO studentDTO) {
-        // 단순 출력..
     }
 }
