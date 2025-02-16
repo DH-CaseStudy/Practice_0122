@@ -1,11 +1,11 @@
 package StudentManagementRefactor;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        StudentManager.getInstance().loadData();
+        StudentManager studentManager = StudentManager.getInstance();
+        studentManager.loadData();
 
         while (true) {
             System.out.println("학생정보 조회 시스템 입니다.");
@@ -27,36 +27,36 @@ public class Main {
                     String grade = calculateGrade(average);
 
                     Student student = new Student(sno, name, korean, english, math, science, total, average, grade);
-                    StudentDBIO.getInstance().input(student); // JSON 파일에 데이터 입력
+                    studentManager.input(student); // JSON 파일에 데이터 입력
                     break;
 
                 case 2: // 전체 테이블 조회
-                    StudentManager.getInstance().loadData();
-                    StudentManager.getInstance().output();
+                    studentManager.loadData();
+                    studentManager.output();
                     break;
 
                 case 3: // 특정 학생 조회
                     System.out.println("조회하고자 하는 학번을 입력하세요.");
                     String searchKey = getValidatedStudentNumber();
-                    StudentManager.getInstance().search(searchKey);
-                    StudentManager.getInstance().output();
+                    studentManager.search(searchKey);
+                    studentManager.output();
                     break;
 
                 case 4: // 이름 기준 정렬
-                    StudentManager.getInstance().sortByName();
-                    StudentManager.getInstance().output();
+                    studentManager.sortByName();
+                    studentManager.output();
                     break;
 
                 case 5: // 성적 기준 정렬
-                    StudentManager.getInstance().sortByTotal();
-                    StudentManager.getInstance().output();
+                    studentManager.sortByTotal();
+                    studentManager.output();
                     break;
 
                 case 6: // 특정 학생 삭제 후 최신 테이블 반환
                     System.out.println("삭제하고자 하는 학번을 입력하세요.");
                     String deleteKey = getValidatedStudentNumber();
-                    HashMap<String, Student> updatedList = StudentDBIO.getInstance().deleteStudent(deleteKey);
-                    StudentManager.getInstance().output();
+                    studentManager.deleteStudent(deleteKey);
+                    studentManager.output();
                     break;
 
                 default:
@@ -65,7 +65,7 @@ public class Main {
         }
     }
 
-    // 학번(5자리 숫자) 입력 검증 메서드
+    // 학번(5자리 숫자) 입력 검증
     private static String getValidatedStudentNumber() {
         System.out.println("학번을 입력하세요 (5자리 숫자):");
         while (true) {
@@ -77,7 +77,7 @@ public class Main {
         }
     }
 
-    // 점수(0~100 범위) 입력 검증 메서드
+    // 점수(0~100 범위) 입력 검증
     private static int getValidatedScore(String subject) {
         System.out.println(subject + " 점수를 입력하세요 (0~100):");
         while (true) {
@@ -89,7 +89,7 @@ public class Main {
         }
     }
 
-    // ✅ 한글 이름 입력 검증 메서드
+    // 한글 이름 입력 검증
     private static String getValidatedName() {
         System.out.println("이름을 입력하세요 (한글만 가능):");
         while (true) {
@@ -101,7 +101,7 @@ public class Main {
         }
     }
 
-    // ✅ 학점 계산 메서드
+    // 학점 계산
     private static String calculateGrade(double average) {
         if (average >= 90) return "A";
         if (average >= 80) return "B";
