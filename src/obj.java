@@ -28,5 +28,6 @@ public class obj {
         System.out.println("두 수의 덧셈 : " + ih.addtion());
         System.out.println("두 수의 뺄셈 : " + ih.subtraction());
         System.out.println("두 수의 곱셈 : " + ih.multiplication());
+
     }
 }
