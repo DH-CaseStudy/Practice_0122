@@ -1,13 +1,11 @@
-package StudentManagementRefactor;
+package MainSystem.student;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.Collator;
@@ -29,7 +27,7 @@ public class StudentDBIO extends ObjectIO implements StudentIO {
     private static final StudentDBIO instance = new StudentDBIO();
 
     /** 학생 데이터를 저장할 JSON 파일 경로. */
-    private static final String filePath = "src/StudentManagementRefactor/students.json";
+    private static final String filePath = "src/MainSystem.StudentManagementRefactor/students.json";
 
     /**
      * 생성자 - 싱글턴 패턴을 적용하여 외부에서 인스턴스 생성 방지.
@@ -60,8 +58,13 @@ public class StudentDBIO extends ObjectIO implements StudentIO {
      * @return 학생 데이터가 저장된 HashMap
      */
     @Override
-    public HashMap<String, Student> loadData() {
+    public Map<String, Student> loadData() {
         return parseJson();
+    }
+
+    @Override
+    public void saveData(Map data) throws IOException {
+        //
     }
 
     /**
@@ -181,7 +184,7 @@ public class StudentDBIO extends ObjectIO implements StudentIO {
                         ((Double) studentObj.get("average")).floatValue(),
                         (String) studentObj.get("grade")
                 );
-                students.put(student.getSno(), student); //key ,value
+                students.put(student.getSno(), student);
             }
 
         } catch (IOException | ParseException e) {

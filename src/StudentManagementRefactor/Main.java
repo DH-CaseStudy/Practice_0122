@@ -32,8 +32,8 @@ public class Main {
 
             switch (input) {
                 case 1: // 학생 입력
-                    String sno = getValidatedStudentNumber();
-                    String name = getValidatedName();
+                    String sno = getValidatedStudentNumber(); //입력과 유효성 검사를 한번에
+                    String name = getValidatedName(); //
 
                     int korean = getValidatedScore("국어");
                     int english = getValidatedScore("영어");
