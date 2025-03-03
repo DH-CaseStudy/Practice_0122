@@ -59,7 +59,6 @@ public class BoardMainMenu implements BoardMenu {
                 board.setBWriter(writer);
             }
         } else if (cmd == 2) {
-            index--;
             arrayList.remove(board);
         } else if (cmd == 3) {
             return;
