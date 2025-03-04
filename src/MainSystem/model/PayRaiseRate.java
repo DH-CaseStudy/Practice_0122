@@ -1,12 +1,16 @@
-package employee;
+package MainSystem.model;
 
+
+import MainSystem.model.dao.EmployeeDBIO;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class PayRaiseRate {
-    private EmployeeDAO employeeDAO = new EmployeeDAO();
+    private EmployeeDBIO employeeDBIO = new EmployeeDBIO();
 
-    public void applyRaise(Employee employee) throws ClassNotFoundException {
+    public void applyRaise(Employee employee) throws SQLException {
         double oldSalary = employee.getSalary();
         double newSalary = oldSalary;
 
@@ -18,14 +22,14 @@ public class PayRaiseRate {
         int lastRaiseYear = employee.getLastRaiseYear(); // 마지막 연봉 인상 연차
 
         // 연차가 증가했을 때만 연봉 인상
-        if (yearsWorked > lastRaiseYear && yearsWorked % 3 == 0) {
+        if (yearsWorked > lastRaiseYear && yearsWorked % 3 == 0 || lastRaiseYear == 0 && yearsWorked >= 3) {
             double raiseRate = getRaiseRate(employee.getRole(), yearsWorked);
 
-                newSalary = oldSalary + (oldSalary * raiseRate);
-                employee.setSalary(newSalary);
-                employee.setLastRaiseYear(yearsWorked);
+            newSalary = oldSalary + (oldSalary * raiseRate);
+            employee.setSalary((int) newSalary);
+            employee.setLastRaiseYear(yearsWorked);
 
-                employeeDAO.updateSalary(employee.getEno(), newSalary, yearsWorked);
+            employeeDBIO.updateEmployee(employee);
 
         }
     }
