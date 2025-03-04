@@ -49,6 +49,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             e.printStackTrace();
         }
 
+        DBUtil.closeConnection();
         return false;
     }
 
@@ -79,7 +80,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                // 🔹 단순히 테이블의 데이터를 Employee 객체로 변환하여 반환
+                //  단순히 테이블의 데이터를 Employee 객체로 변환하여 반환
                 return new Employee(
                         rs.getString("eno"),
                         rs.getString("name"),
@@ -96,6 +97,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             e.printStackTrace();
         }
 
+        DBUtil.closeConnection();
         return null; // 직원이 존재하지 않는 경우
     }
 
@@ -129,6 +131,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             e.printStackTrace();
         }
 
+        DBUtil.closeConnection();
         return employees;
     }
 
@@ -160,6 +163,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             e.printStackTrace();
         }
 
+        DBUtil.closeConnection();
         return employees;
     }
 
@@ -191,6 +195,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             e.printStackTrace();
         }
 
+        DBUtil.closeConnection();
         return employees;
     }
 
