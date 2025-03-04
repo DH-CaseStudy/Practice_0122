@@ -11,7 +11,6 @@ public class EmployeeDAO {
 
     public List<Employee> getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
-        Employee employee = null;
         try {
             conn = Db.getConnection();
             String sql = "SELECT * FROM Employee";
@@ -25,31 +24,32 @@ public class EmployeeDAO {
                 int enterYear = rs.getInt("enterYear");
                 int enterMonth = rs.getInt("enterMonth");
                 int enterDay = rs.getInt("enterDay");
-                employee = new Employee(eno,name, salary, role, enterYear, enterMonth, enterDay);
+                int lastRaiseYear = rs.getInt("lastRaiseYear");
+
+                Employee employee = new Employee(eno, name, salary, role, enterYear, enterMonth, enterDay, lastRaiseYear);
                 employees.add(employee);
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
         } finally {
             closeResources();
         }
         return employees;
     }
 
-    public void updateSalary(String eno, double newSalary) throws ClassNotFoundException {
+
+    public void updateSalary(String eno, double newSalary, int lastRaiseYear) throws ClassNotFoundException {
         try {
             conn = Db.getConnection();
-            String sql = "UPDATE Employee SET salary = ? WHERE eno = ?";
+            String sql = "UPDATE Employee SET salary = ?, lastRaiseYear = ? WHERE eno = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setDouble(1, newSalary);
-            pstmt.setString(2, eno);
-
+            pstmt.setInt(2, lastRaiseYear);
+            pstmt.setString(3, eno);
 
             int updatedRows = pstmt.executeUpdate();
-
             if (updatedRows > 0) {
-                System.out.println("급여가 성공적으로 업데이트되었습니다.  " + newSalary);
+                System.out.println("급여가 성공적으로 업데이트되었습니다. 직원 ID: " + eno + ", 새 급여: " + newSalary);
             } else {
                 System.out.println("급여 업데이트 실패. 직원 ID: " + eno);
             }
@@ -59,6 +59,7 @@ public class EmployeeDAO {
             closeResources();
         }
     }
+
 
     private void closeResources() {
         try {

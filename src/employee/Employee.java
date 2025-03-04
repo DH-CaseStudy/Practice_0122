@@ -12,8 +12,9 @@ public class Employee {
     private int enterYear;
     private int enterMonth;
     private int enterDay;
+    private int lastRaiseYear;
 
-    public Employee(String eno, String name, double salary, String role, int enterYear, int enterMonth, int enterDay) {
+    public Employee(String eno, String name, double salary, String role, int enterYear, int enterMonth, int enterDay, int lastRaiseYear) {
         this.eno = eno;
         this.name = name;
         this.salary = salary;
@@ -21,5 +22,6 @@ public class Employee {
         this.enterYear = enterYear;
         this.enterMonth = enterMonth;
         this.enterDay = enterDay;
+        this.lastRaiseYear = lastRaiseYear;
     }
 }
