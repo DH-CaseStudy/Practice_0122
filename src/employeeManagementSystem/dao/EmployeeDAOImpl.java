@@ -86,7 +86,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             pstmt.setString(1, eno);
             pstmt.executeUpdate();
         }
-
     }
 
     private void makeSecretaryNull(String eno) throws SQLException {
