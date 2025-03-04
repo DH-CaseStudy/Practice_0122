@@ -19,10 +19,9 @@ public class Db {
         //System.out.println("Connection Ok!" + connection);
         return connection;
     }
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws  ClassNotFoundException {
         EmployeeDAO employeeDAO = new EmployeeDAO();
         PayRaiseRate payRaiseRate = new PayRaiseRate();
-
 
         List<Employee> employees = employeeDAO.getAllEmployees();
         System.out.println(employeeDAO.getAllEmployees());

@@ -27,7 +27,6 @@ public class PayRaiseRate {
         System.out.println("급여가 업데이트되었습니다. 직원 ID: " + employee.getEno());
     }
 
-    // 역할별 경과된 연수에 따른 급여 인상율 계산
     private double getRaiseRate(String role, int yearsWorked) {
         switch (role) {
             case "Manager":
