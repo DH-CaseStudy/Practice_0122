@@ -32,9 +32,9 @@ public class PayRaiseRate {
     private double getRaiseRate(String role, int yearsWorked) {
         switch (role) {
             case "Manager":
-                if (yearsWorked >= 9) return 0.20;
-                else if (yearsWorked >= 6) return 0.15;
-                else if (yearsWorked >= 3) return 0.10;
+                if (yearsWorked >= 9) return 0.20;          // 9년차 이상은 20프로 인상
+                else if (yearsWorked >= 6) return 0.15;     // 6년차 이상은 15프로
+                else if (yearsWorked >= 3) return 0.10;     // 3년차 이상은 10프로
                 break;
             case "Staff":
                 if (yearsWorked >= 9) return 0.18;
