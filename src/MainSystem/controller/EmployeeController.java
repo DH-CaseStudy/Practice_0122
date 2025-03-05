@@ -2,6 +2,8 @@ package MainSystem.controller;
 
 import MainSystem.model.Employee;
 import MainSystem.model.EmployeeManager;
+import MainSystem.model.PayRaiseRate;
+import MainSystem.model.dao.EmployeeDBIO;
 import MainSystem.view.EmployeeView;
 
 import java.sql.SQLException;
@@ -63,5 +65,15 @@ public class EmployeeController {
     public void searchEmployeesByRole(String role) {
         List<Employee> employees = employeeManager.searchEmployeesByRole(role);
         employeeView.displayEmployees(employees);
+    }
+
+
+    public void updateSalary() throws SQLException {
+        EmployeeDBIO employeeDBIO = new EmployeeDBIO();
+        PayRaiseRate payRaiseRate = new PayRaiseRate();
+        List<Employee> employees = employeeDBIO.getAllEmployees();
+        for (Employee employee : employees) {
+            payRaiseRate.applyRaise(employee);
+        }
     }
 }

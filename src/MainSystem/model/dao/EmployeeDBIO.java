@@ -20,7 +20,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
     public boolean addEmployee(Employee employee) {
 
         String sql = "" +
-                "INSERT INTO EMPLOYEE1 (eno, name, enteryear, entermonth, enterday, role, secno, salary) " +
+                "INSERT INTO EMPLOYEE (eno, name, enteryear, entermonth, enterday, role, secno, salary) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBUtil.getConnection();
@@ -56,7 +56,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
     @Override
     public boolean updateEmployee(Employee employee) throws SQLException {
 
-        String sql = "UPDATE Employee1 SET name=?, enteryear=?, entermonth=?, enterday=?, role=?, secno=?, salary=?, lastRaiseYear =? WHERE eno=?";
+        String sql = "UPDATE EMPLOYEE SET name=?, enteryear=?, entermonth=?, enterday=?, role=?, secno=?, salary=?, lastRaiseYear =? WHERE eno=?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, employee.getName());
@@ -77,7 +77,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
 
     @Override
     public Employee getEmployeeById(String eno) {
-        String sql = "SELECT * FROM EMPLOYEE1 WHERE eno = ?";
+        String sql = "SELECT * FROM EMPLOYEE WHERE eno = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -112,7 +112,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
     @Override
     public List<Employee> getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
-        String sql = "SELECT * FROM EMPLOYEE1";
+        String sql = "SELECT * FROM EMPLOYEE";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -143,7 +143,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
     @Override
     public List<Employee> searchEmployeesByName(String name) {
         List<Employee> employees = new ArrayList<>();
-        String sql = "SELECT * FROM EMPLOYEE1 WHERE name LIKE ?";
+        String sql = "SELECT * FROM EMPLOYEE WHERE name LIKE ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -178,7 +178,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
     @Override
     public List<Employee> searchEmployeesByRole(String role) {
         List<Employee> employees = new ArrayList<>();
-        String sql = "SELECT * FROM EMPLOYEE1 WHERE role LIKE ?";
+        String sql = "SELECT * FROM EMPLOYEE WHERE role LIKE ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
