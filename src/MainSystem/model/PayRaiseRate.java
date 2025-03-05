@@ -22,7 +22,7 @@ public class PayRaiseRate {
         int lastRaiseYear = employee.getLastRaiseYear(); // 마지막 연봉 인상 연차
 
         // 연차가 증가했을 때만 연봉 인상
-        if (yearsWorked > lastRaiseYear && yearsWorked % 3 == 0 || lastRaiseYear == 0 && yearsWorked >= 3) {
+        if (yearsWorked > lastRaiseYear && yearsWorked % 3 == 0) {
             double raiseRate = getRaiseRate(employee.getRole(), yearsWorked);
 
             newSalary = oldSalary + (oldSalary * raiseRate);
