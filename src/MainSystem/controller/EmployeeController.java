@@ -4,6 +4,7 @@ import MainSystem.model.Employee;
 import MainSystem.model.EmployeeManager;
 import MainSystem.view.EmployeeView;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class EmployeeController {
@@ -27,7 +28,7 @@ public class EmployeeController {
     }
 
     // 직원 정보 업데이트 요청 처리
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee) throws SQLException {
         boolean result = employeeManager.updateEmployee(employee);
         if (result) {
             employeeView.displayMessage("직원 정보 업데이트 성공: " + employee.getName());

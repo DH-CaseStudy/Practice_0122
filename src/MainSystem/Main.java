@@ -1,19 +1,20 @@
 package MainSystem;
 
 import MainSystem.controller.EmployeeController;
-import MainSystem.model.Manager;
-import MainSystem.model.Secretary;
-import MainSystem.model.Staff;
+import MainSystem.model.*;
+import MainSystem.model.dao.EmployeeDBIO;
 import MainSystem.student.Student;
 import MainSystem.student.StudentManager;
 import MainSystem.student.Utility;
 import MainSystem.view.EmployeeView;
 
-import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+
         while (true) {
             System.out.println("메인 시스템입니다.");
             System.out.println("1. 직원 시스템");
@@ -39,10 +40,18 @@ public class Main {
     }
 
     // 직원 시스템: 사용자가 "0"을 입력하면 해당 시스템 종료 후 메인 메뉴로 복귀
-    private static void employeeSystem() {
+    private static void employeeSystem() throws SQLException, ClassNotFoundException {
         EmployeeView view = new EmployeeView();
         EmployeeController controller = new EmployeeController(view);
+        EmployeeDBIO employeeDBIO = new EmployeeDBIO();
+        PayRaiseRate payRaiseRate = new PayRaiseRate();
 
+        List<Employee> employees = employeeDBIO.getAllEmployees();
+
+        for (Employee employee : employees) {
+            payRaiseRate.applyRaise(employee);
+
+        }
         while (true) {
             System.out.println("\n--- 직원 시스템 ---");
             System.out.println("1. 입력");
@@ -75,18 +84,19 @@ public class Main {
                     System.out.println("직군을 선택하세요");
                     System.out.println("1. 직원, 2. 임원, 3. 비서");
                     int role = Utility.readInput(Integer.class);
+                    int lastRaiseYear = 0;                          // salary 업데이트 연차 변수 초기화
 
                     switch (role) {
                         case 1:
-                            controller.addEmployee(new Staff(eno, name, enterYear, enterMonth, enterDay, salary));
+                            controller.addEmployee(new Staff(eno, name, enterYear, enterMonth, enterDay, salary, lastRaiseYear));
                             break;
                         case 2:
                             System.out.println("비서의 직원 번호를 입력하세요.");
                             String secno = Utility.readInput(String.class);
-                            controller.addEmployee(new Manager(eno, name, enterYear, enterMonth, enterDay, secno, salary));
+                            controller.addEmployee(new Manager(eno, name, enterYear, enterMonth, enterDay, secno, salary, lastRaiseYear));
                             break;
                         case 3:
-                            controller.addEmployee(new Secretary(eno, name, enterYear, enterMonth, enterDay, salary));
+                            controller.addEmployee(new Secretary(eno, name, enterYear, enterMonth, enterDay, salary, lastRaiseYear));
                             break;
                         default:
                             System.out.println("잘못 선택하셨습니다.");

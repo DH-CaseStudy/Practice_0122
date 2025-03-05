@@ -37,10 +37,10 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
 
             System.out.println(pstmt.toString());
             int cnt = pstmt.executeUpdate();
-            if( cnt>0 ){
+            if (cnt > 0) {
                 System.out.println("회원 정보 추가 성공");
                 return true;
-            }else{
+            } else {
                 System.out.println("회원 정보 추가 실패");
                 return false;
             }
@@ -49,25 +49,31 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             e.printStackTrace();
         }
 
-        DBUtil.closeConnection();
+        DBUtil.getConnection();
         return false;
     }
 
     @Override
-    public boolean updateEmployee(Employee employee) {
+    public boolean updateEmployee(Employee employee) throws SQLException {
 
-//        Connection conn = null;
-//        PreparedStatement pstmt = null;
-//
-//        try{
-//            conn = DBUtil.getConnection();
-//            String sql =
-//        } catch (SQLException e){
-//            e.printStackTrace();
-//        }
+        String sql = "UPDATE EMPLOYEE SET name=?, enteryear=?, entermonth=?, enterday=?, role=?, secno=?, salary=?, lastRaiseYear =? WHERE eno=?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, employee.getName());
+            pstmt.setInt(2, employee.getEnterYear());
+            pstmt.setInt(3, employee.getEnterMonth());
+            pstmt.setInt(4, employee.getEnterDay());
+            pstmt.setString(5, employee.getRole());
+            pstmt.setString(6, employee.getSecno());
+            pstmt.setInt(7, employee.getSalary());
+            pstmt.setInt(8, employee.getLastRaiseYear());
+            pstmt.setString(9, employee.getEno());
+            pstmt.executeUpdate();
+        }
 
         return false;
     }
+
 
     @Override
     public Employee getEmployeeById(String eno) {
@@ -80,7 +86,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                //  단순히 테이블의 데이터를 Employee 객체로 변환하여 반환
+                // 🔹 단순히 테이블의 데이터를 Employee 객체로 변환하여 반환
                 return new Employee(
                         rs.getString("eno"),
                         rs.getString("name"),
@@ -89,7 +95,8 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
                         rs.getInt("enterday"),
                         rs.getString("role"),  // 그대로 저장
                         rs.getString("secno"),
-                        rs.getInt("salary")
+                        rs.getInt("salary"),
+                        rs.getInt("lastRaiseYear")
                 );
             }
 
@@ -97,11 +104,9 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             e.printStackTrace();
         }
 
-        DBUtil.closeConnection();
+        DBUtil.getConnection();
         return null; // 직원이 존재하지 않는 경우
     }
-
-
 
 
     @Override
@@ -109,10 +114,9 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
         List<Employee> employees = new ArrayList<>();
         String sql = "SELECT * FROM EMPLOYEE";
 
-        try(Connection conn = DBUtil.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            ResultSet rs = pstmt.executeQuery();
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 employees.add(new Employee(
@@ -123,25 +127,26 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
                         rs.getInt("enterday"),
                         rs.getString("role"),
                         rs.getString("secno"),
-                        rs.getInt("salary")
+                        rs.getInt("salary"),
+                        rs.getInt("lastRaiseYear")
                 ));
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error retrieving employees", e);
         }
 
-        DBUtil.closeConnection();
         return employees;
     }
+
 
     @Override
     public List<Employee> searchEmployeesByName(String name) {
         List<Employee> employees = new ArrayList<>();
         String sql = "SELECT * FROM EMPLOYEE WHERE name LIKE ?";
 
-        try(Connection conn = DBUtil.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, "%" + name + "%");
             ResultSet rs = pstmt.executeQuery();
@@ -155,15 +160,18 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
                         rs.getInt("enterday"),
                         rs.getString("role"),
                         rs.getString("secno"),
-                        rs.getInt("salary")
+                        rs.getInt("salary"),
+                        rs.getInt("lastRaiseYear")
+
                 ));
+
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        DBUtil.closeConnection();
+        DBUtil.getConnection();
         return employees;
     }
 
@@ -172,8 +180,8 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
         List<Employee> employees = new ArrayList<>();
         String sql = "SELECT * FROM EMPLOYEE WHERE role LIKE ?";
 
-        try(Connection conn = DBUtil.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, role);
             ResultSet rs = pstmt.executeQuery();
@@ -187,15 +195,18 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
                         rs.getInt("enterday"),
                         rs.getString("role"),
                         rs.getString("secno"),
-                        rs.getInt("salary")
+                        rs.getInt("salary"),
+                        rs.getInt("lastRaiseYear")
+
                 ));
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        DBUtil.closeConnection();
+        DBUtil.getConnection();
         return employees;
     }
 
