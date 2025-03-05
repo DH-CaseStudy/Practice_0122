@@ -10,6 +10,8 @@ import MainSystem.student.Utility;
 import MainSystem.view.EmployeeView;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Main {
 
@@ -77,8 +79,15 @@ public class Main {
                     System.out.println("직군을 선택하세요");
                     System.out.println("1. 직원, 2. 임원, 3. 비서");
                     int role = Utility.readInput(Integer.class);
-                    int lastRaiseYear = 0;                          // salary 업데이트 연차 변수 초기화
 
+                    // 현재 날짜 가져오기
+                    LocalDate currentDate = LocalDate.now();
+                    // 입사 날짜 객체 생성
+                    LocalDate enterDate = LocalDate.of(enterYear, enterMonth, enterDay);
+                    long daysWorked = ChronoUnit.DAYS.between(enterDate, currentDate);
+                    // 근속 연수 계산 (연 단위 차이 계산)
+                    int lastRaiseYear = (int) (daysWorked / 365);
+                    System.out.println(lastRaiseYear);
                     switch (role) {
                         case 1:
                             controller.addEmployee(new Staff(eno, name, enterYear, enterMonth, enterDay, salary, lastRaiseYear));
@@ -95,9 +104,9 @@ public class Main {
                             System.out.println("잘못 선택하셨습니다.");
                             break;
                     }
-                    controller.updateSalary();
                     break;
                 case 2: // 전체 조회
+                    controller.updateSalary();
                     controller.listAllEmployees();
                     break;
                 case 3: // 사번으로 조회

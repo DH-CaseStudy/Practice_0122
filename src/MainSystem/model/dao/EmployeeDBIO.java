@@ -20,8 +20,8 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
     public boolean addEmployee(Employee employee) {
 
         String sql = "" +
-                "INSERT INTO EMPLOYEE (eno, name, enteryear, entermonth, enterday, role, secno, salary) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                "INSERT INTO EMPLOYEE (eno, name, enteryear, entermonth, enterday, role, secno, salary, lastRaiseYear) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -34,6 +34,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
             pstmt.setString(6, employee.getRole());
             pstmt.setString(7, employee.getSecno());
             pstmt.setInt(8, employee.getSalary());
+            pstmt.setInt(9, employee.getLastRaiseYear());
 
             System.out.println(pstmt.toString());
             int cnt = pstmt.executeUpdate();
