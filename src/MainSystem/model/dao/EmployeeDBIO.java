@@ -56,50 +56,41 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
 
     @Override
     public boolean updateEmployee(Employee employee) {
-
         String eno = employee.getEno();
 
-        // 업데이트할 항목 선택 (1. 이름, 2. 입사월, 3. 입사년도, 4. 입사일, 5. 직급, 6. 비서번호, 7. 급여)
-        System.out.println("업데이트할 항목을 선택하세요:");
-        System.out.println("1. 이름");
-        System.out.println("2. 입사월");
-        System.out.println("3. 입사년도");
-        System.out.println("4. 입사일");
-        System.out.println("5. 직급");
-        System.out.println("6. 비서번호");
-        System.out.println("7. 급여");
+        Employee existing = getEmployeeById(eno);
+        if (existing == null) {
+            System.out.println("업데이트 실패: 해당 사번의 직원이 존재하지 않습니다.");
+            return false;
+        }
 
-        int option = Utility.readInput(Integer.class);
+        String column = null;
+        String newValue = null;
 
-        System.out.println("새로운 값을 입력하세요:");
-        String newValue = Utility.readInput(String.class);
-
-        String column = "";
-        switch(option) {
-            case 1:
-                column = "name";
-                break;
-            case 2:
-                column = "entermonth";
-                break;
-            case 3:
-                column = "enteryear";
-                break;
-            case 4:
-                column = "enterday";
-                break;
-            case 5:
-                column = "role";
-                break;
-            case 6:
-                column = "secno";
-                break;
-            case 7:
-                column = "salary";
-                break;
-            default:
-                System.out.println("잘못된 옵션입니다.");
-                return false;
+        if (employee.getName() != null && !employee.getName().isEmpty()) {
+            column = "name";
+            newValue = employee.getName();
+        } else if (employee.getEnterYear() != 0) {
+            column = "enteryear";
+            newValue = Integer.toString(employee.getEnterYear());
+        } else if (employee.getEnterMonth() != 0) {
+            column = "entermonth";
+            newValue = Integer.toString(employee.getEnterMonth());
+        } else if (employee.getEnterDay() != 0) {
+            column = "enterday";
+            newValue = Integer.toString(employee.getEnterDay());
+        } else if (employee.getRole() != null && !employee.getRole().isEmpty()) {
+            column = "role";
+            newValue = employee.getRole();
+        } else if (employee.getSecno() != null && !employee.getSecno().isEmpty()) {
+            column = "secno";
+            newValue = employee.getSecno();
+        } else if (employee.getSalary() != 0) {
+            column = "salary";
+            newValue = Integer.toString(employee.getSalary());
+        } else {
+            System.out.println("업데이트할 항목이 지정되지 않았습니다.");
+            return false;
         }
 
         String sql = "UPDATE EMPLOYEE SET " + column + " = ? WHERE eno = ?";
@@ -107,8 +98,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // 숫자형 컬럼은 정수형으로 변환해서 바인딩
-            if (column.equals("entermonth") || column.equals("enteryear") ||
+            if (column.equals("enteryear") || column.equals("entermonth") ||
                     column.equals("enterday") || column.equals("salary")) {
                 pstmt.setInt(1, Integer.parseInt(newValue));
             } else {
@@ -121,7 +111,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
                 System.out.println("업데이트 성공");
                 return true;
             } else {
-                System.out.println("업데이트 실패: 해당 사번의 직원이 존재하지 않습니다.");
+                System.out.println("업데이트 실패");
             }
         } catch (SQLException e) {
             e.printStackTrace();
