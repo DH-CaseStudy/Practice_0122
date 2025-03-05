@@ -87,7 +87,7 @@ public class Main {
                     long daysWorked = ChronoUnit.DAYS.between(enterDate, currentDate);
                     // 근속 연수 계산 (연 단위 차이 계산)
                     int lastRaiseYear = (int) (daysWorked / 365);
-                    System.out.println(lastRaiseYear);
+
                     switch (role) {
                         case 1:
                             controller.addEmployee(new Staff(eno, name, enterYear, enterMonth, enterDay, salary, lastRaiseYear));
