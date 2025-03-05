@@ -1,15 +1,15 @@
 package MainSystem;
 
 import MainSystem.controller.EmployeeController;
-import MainSystem.model.*;
-import MainSystem.model.dao.EmployeeDBIO;
+import MainSystem.model.Manager;
+import MainSystem.model.Secretary;
+import MainSystem.model.Staff;
 import MainSystem.student.Student;
 import MainSystem.student.StudentManager;
 import MainSystem.student.Utility;
 import MainSystem.view.EmployeeView;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class Main {
 
@@ -43,15 +43,8 @@ public class Main {
     private static void employeeSystem() throws SQLException, ClassNotFoundException {
         EmployeeView view = new EmployeeView();
         EmployeeController controller = new EmployeeController(view);
-        EmployeeDBIO employeeDBIO = new EmployeeDBIO();
-        PayRaiseRate payRaiseRate = new PayRaiseRate();
+        controller.updateSalary();
 
-        List<Employee> employees = employeeDBIO.getAllEmployees();
-
-        for (Employee employee : employees) {
-            payRaiseRate.applyRaise(employee);
-
-        }
         while (true) {
             System.out.println("\n--- 직원 시스템 ---");
             System.out.println("1. 입력");
@@ -102,6 +95,7 @@ public class Main {
                             System.out.println("잘못 선택하셨습니다.");
                             break;
                     }
+                    controller.updateSalary();
                     break;
                 case 2: // 전체 조회
                     controller.listAllEmployees();
