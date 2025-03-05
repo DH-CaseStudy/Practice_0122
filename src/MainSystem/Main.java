@@ -10,10 +10,13 @@ import MainSystem.student.Utility;
 import MainSystem.view.EmployeeView;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
         while (true) {
             System.out.println("메인 시스템입니다.");
             System.out.println("1. 직원 시스템");
@@ -58,7 +61,7 @@ public class Main {
             switch (input) {
                 case 1: // 직원 입력
                     System.out.println("직원 번호를 입력하세요.");
-                    String eno = getValidatedNumber();
+                    String eno = getValidatedNumber1();
 
                     System.out.println("직원 이름을 입력하세요.");
                     String name = getValidatedName();
@@ -152,7 +155,7 @@ public class Main {
 
             switch (input) {
                 case 1: // 학생 입력
-                    String sno = getValidatedNumber();
+                    String sno = getValidatedNumber_Student();
                     String name = getValidatedName();
 
                     int korean = getValidatedScore("국어");
@@ -173,7 +176,7 @@ public class Main {
                     break;
                 case 3: // 특정 학생 조회
                     System.out.println("조회하고자 하는 학번을 입력하세요.");
-                    String searchKey = getValidatedNumber();
+                    String searchKey = getValidatedNumber_Student();
                     StudentManager.getInstance().search(searchKey);
                     break;
                 case 4: // 이름 기준 정렬
@@ -186,7 +189,7 @@ public class Main {
                     break;
                 case 6: // 학생 삭제
                     System.out.println("삭제하고자 하는 학번을 입력하세요.");
-                    String deleteKey = getValidatedNumber();
+                    String deleteKey = getValidatedNumber_Student();
                     StudentManager.getInstance().deleteStudent(deleteKey);
                     StudentManager.getInstance().output();
                     break;
@@ -200,9 +203,8 @@ public class Main {
     }
 
     // 아래는 입력값 검증을 위한 보조 메서드들
-
-    private static String getValidatedNumber() {
-        System.out.println("5자리 숫자를 입력하세요.");
+    // private static String getValidatedNumber1() -- 비서, 직원, 매니저 함수
+    private static String getValidatedNumber_Student(){ System.out.println("5자리 숫자를 입력하세요.");
         while (true) {
             String sno = Utility.readInput(String.class);
             if (sno.matches("\\d{5}")) {
@@ -211,6 +213,50 @@ public class Main {
             System.out.println("반드시 5자리 숫자로 입력해야 합니다. 다시 입력하세요.");
         }
     }
+
+    private static String getValidatedNumber1() {
+        List<String> JobTYpe = Arrays.asList("M", "SEC", "S");
+        System.out.println("직원 번호를 형식에 맞게 입력하세요.");
+
+        while (true) {
+            String sno = Utility.readInput(String.class);
+
+            // 문자와 숫자 분리
+            String letters = sno.replaceAll("[0-9]", ""); // 문자만 남김
+            String numbers = sno.replaceAll("[^0-9]", ""); // 숫자만 남김
+
+            // 숫자 부분을 int형으로 변환 (빈 문자열일 경우 예외 발생 방지)
+            if (numbers.isEmpty()) {
+                System.out.println("숫자가 포함되지 않았습니다. 다시 입력하세요.");
+                continue;
+            }
+
+            String letters1 = letters.toUpperCase();
+            int numericValue = Integer.parseInt(numbers);
+
+            // 직원 번호 유효성 검사 (S, Sec, M 중 하나 + 최대 3자리 숫자)
+            if ((letters1.equals("S") || letters1.equals("SEC") || letters1.equals("M"))
+                    && numbers.length() > 0 && numbers.length() < 4) {
+                return sno;
+            }
+            else if((!JobTYpe.contains(letters1)) && ( numbers.length() >= 4)){
+                System.out.println("직업유형이 맞지 않고,숫자범위를 벗어났습니다. ");
+            }
+            //->직업식별번호 ,숫자범위를 초과했습니다
+
+            else if((JobTYpe.contains(letters1) && (numbers.length() < 0 || numbers.length() >= 4))){
+                System.out.println("직업유형은 맞고 , 숫자범위를 벗어났습니다.");
+            }
+            else if(!JobTYpe.contains(letters1)){
+                System.out.println("숫자범위는 들어가지만 직업유형이 맞지 않습니다");
+            }
+
+            System.out.println("다시 입력!!!");
+        }
+    }
+
+
+
 
     private static int getValidateEnterYear() {
         System.out.println("1950년 부터 2025 년 까지 입력 가능합니다.");
