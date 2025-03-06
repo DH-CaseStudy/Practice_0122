@@ -1,3 +1,10 @@
 # 디폴트 무시된 파일
 /shelf/
 /workspace.xml
+/dataSources/19adfe54-05a3-4ae2-a428-cab5cfe58b7e.xml
+/dataSources.local.xml
+/dataSources/19adfe54-05a3-4ae2-a428-cab5cfe58b7e/storage_v2/_src_/schema/employeemanagement.cV1jhQ.meta
+/dataSources/19adfe54-05a3-4ae2-a428-cab5cfe58b7e/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
+/dataSources/19adfe54-05a3-4ae2-a428-cab5cfe58b7e/storage_v2/_src_/schema/mysql.osA4Bg.meta
+/dataSources/19adfe54-05a3-4ae2-a428-cab5cfe58b7e/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
+/dataSources/19adfe54-05a3-4ae2-a428-cab5cfe58b7e/storage_v2/_src_/schema/sys.zb4BAA.meta
