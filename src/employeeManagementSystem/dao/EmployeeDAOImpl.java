@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
     private static final String URL = "jdbc:mysql://localhost:3306/ssgdb?serverTimezone=Asia/Seoul";
@@ -73,6 +75,34 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             pstmt.setString(6, emp.getSecNo());
             pstmt.setBigDecimal(7, emp.getSalary());
             pstmt.setString(8, emp.getEno());
+            pstmt.executeUpdate();
+        }
+    }
+
+    // 원하는 속성만 update
+    public void updatePartialEmployee(String eno, Map<String, Object> updateFields) throws SQLException {
+        if (eno == null || updateFields == null) {
+            return;
+        }
+        StringBuilder sql = new StringBuilder("UPDATE Employee SET ");
+
+        int i = 0;
+        for (String field : updateFields.keySet()) {
+            if (i > 0) {
+                sql.append(", ");
+            }
+            sql.append(field).append(" = ?");
+            i++;
+        }
+        sql.append(" WHERE eno = ?");
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+            int cnt = 1;
+            for (Object value : updateFields.values()) {
+                pstmt.setObject(cnt++, value);
+            }
+            pstmt.setString(cnt, eno);
             pstmt.executeUpdate();
         }
     }

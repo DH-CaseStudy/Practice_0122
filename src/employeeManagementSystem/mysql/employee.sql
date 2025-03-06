@@ -40,4 +40,7 @@ INSERT INTO PayRaiseRate (role, rate) VALUES
 ('Secretary', 0.05);
 
 select * from Employee;
-select * from PayRaiseRate
+select * from PayRaiseRate;
+
+INSERT INTO Employee (eno, name, enteryear, entermonth, enterday, role, secno, salary) VALUES
+('sec007', 'Secretary seven', 2024, 7, 7, 'Secretary', null, 37700.00);

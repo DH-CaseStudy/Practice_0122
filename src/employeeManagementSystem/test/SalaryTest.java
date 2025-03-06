@@ -10,7 +10,7 @@ public class SalaryTest {
     public static void main(String[] args) {
         EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
         try {
-            BigDecimal currentMonthlySalary = employeeDAO.getCurrentMonthlySalary("s001");
+            BigDecimal currentMonthlySalary = employeeDAO.getCurrentMonthlySalary("sec007");
             if (currentMonthlySalary != null) {
                 System.out.println("연차별 인상률이 적용된 월급 : " + currentMonthlySalary);
                 BigDecimal annualSalary = currentMonthlySalary.multiply(new BigDecimal("12"));
