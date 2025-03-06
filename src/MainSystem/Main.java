@@ -10,11 +10,14 @@ import MainSystem.student.StudentManager;
 import MainSystem.student.Utility;
 import MainSystem.view.EmployeeView;
 
-import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+
         while (true) {
             System.out.println("메인 시스템입니다.");
             System.out.println("1. 직원 시스템");
@@ -40,9 +43,10 @@ public class Main {
     }
 
     // 직원 시스템: 사용자가 "0"을 입력하면 해당 시스템 종료 후 메인 메뉴로 복귀
-    private static void employeeSystem() {
+    private static void employeeSystem() throws SQLException, ClassNotFoundException {
         EmployeeView view = new EmployeeView();
         EmployeeController controller = new EmployeeController(view);
+        controller.updateSalary();
 
         while (true) {
             System.out.println("\n--- 직원 시스템 ---");
@@ -51,7 +55,6 @@ public class Main {
             System.out.println("3. 사번으로 조회");
             System.out.println("4. 이름으로 조회");
             System.out.println("5. 직군별 검색");
-            System.out.println("6. 사번으로 업데이트");
             System.out.println("0. 직원 시스템 종료");
             System.out.print("원하는 번호를 입력하세요: ");
 
@@ -78,17 +81,26 @@ public class Main {
                     System.out.println("1. 직원, 2. 임원, 3. 비서");
                     int role = Utility.readInput(Integer.class);
 
+                    // 현재 날짜 가져오기
+                    LocalDate currentDate = LocalDate.now();
+                    // 입사 날짜 객체 생성
+                    LocalDate enterDate = LocalDate.of(enterYear, enterMonth, enterDay);
+                    long daysWorked = ChronoUnit.DAYS.between(enterDate, currentDate);
+                    // 근속 연수 계산 (연 단위 차이 계산)
+                    int lastRaiseYear = (int) (daysWorked / 365);
+
                     switch (role) {
                         case 1:
-                            controller.addEmployee(new Staff(eno, name, enterYear, enterMonth, enterDay, salary));
+                            controller.addEmployee(new Staff(eno, name, enterYear, enterMonth, enterDay, salary, lastRaiseYear));
                             break;
                         case 2:
+                            controller.getUnassignedSecretaries();
                             System.out.println("비서의 직원 번호를 입력하세요.");
                             String secno = Utility.readInput(String.class);
-                            controller.addEmployee(new Manager(eno, name, enterYear, enterMonth, enterDay, secno, salary));
+                            controller.addEmployee(new Manager(eno, name, enterYear, enterMonth, enterDay, secno, salary, lastRaiseYear));
                             break;
                         case 3:
-                            controller.addEmployee(new Secretary(eno, name, enterYear, enterMonth, enterDay, salary));
+                            controller.addEmployee(new Secretary(eno, name, enterYear, enterMonth, enterDay, salary, lastRaiseYear));
                             break;
                         default:
                             System.out.println("잘못 선택하셨습니다.");
@@ -96,6 +108,7 @@ public class Main {
                     }
                     break;
                 case 2: // 전체 조회
+                    controller.updateSalary();
                     controller.listAllEmployees();
                     break;
                 case 3: // 사번으로 조회
@@ -190,10 +203,10 @@ public class Main {
                             break;
                     }
 
-                    Employee updateEmployee = new Employee(eno, name, enterYear, enterMonth, enterDay, roleStr, secnoStr, salary);
-                    controller.updateEmployee(updateEmployee);
+                    Employee updateEmployee = new Employee(eno, name, enterYear, enterMonth, enterDay, roleStr, secnoStr, salary , 0);
+                    controller.selectUpdateEmployee(updateEmployee);
                     break;
-                case 0: // 업데이트 종료 후 메인 메뉴로
+                case 0: // 직원 시스템 종료 후 메인 메뉴로 복귀
                     System.out.println("직원 시스템을 종료합니다.");
                     return;
                 default:

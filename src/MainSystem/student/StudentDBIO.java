@@ -29,7 +29,7 @@ public class StudentDBIO extends ObjectIO implements StudentIO {
     private static final StudentDBIO instance = new StudentDBIO();
 
     /** 학생 데이터를 저장할 JSON 파일 경로. */
-    private static final String filePath = "src/MainSystem.StudentManagementRefactor/students.json";
+    private static final String filePath = "src/MainSystem/student/students.json";
 
     /**
      * 생성자 - 싱글턴 패턴을 적용하여 외부에서 인스턴스 생성 방지.
