@@ -1,6 +1,7 @@
 package MainSystem;
 
 import MainSystem.controller.EmployeeController;
+import MainSystem.model.Employee;
 import MainSystem.model.Manager;
 import MainSystem.model.Secretary;
 import MainSystem.model.Staff;
@@ -137,6 +138,73 @@ public class Main {
                         default:
                             System.out.println("잘못 입력하셨습니다.");
                     }
+                    break;
+                case 6: // 업데이트
+                    System.out.println("업데이트할 직원의 사번을 입력하세요:");
+                    eno = Utility.readInput(String.class);
+
+                    if (eno == null) {
+                        System.out.println("해당 사번의 직원이 존재하지 않습니다.");
+                        break;
+                    }
+
+                    name = "";
+                    enterYear = 0;
+                    enterMonth = 0;
+                    enterDay = 0;
+                    //위의 role,secno값이 있어 새로운 값 정의
+                    String roleStr = "";
+                    String secnoStr = "";
+                    salary = 0; // insert시 테이블에서 자동으로 0이 들어가지만 업데이트 시에는 이미 레코드가 존재하기때문에 기본값 0으로 초기화 해줘야함
+
+                    System.out.println("업데이트할 항목을 선택하세요:");
+                    System.out.println("1. 이름");
+                    System.out.println("2. 입사월");
+                    System.out.println("3. 입사년도");
+                    System.out.println("4. 입사일");
+                    System.out.println("5. 직급");
+                    System.out.println("6. 비서번호");
+                    System.out.println("7. 급여");
+                    int option = Utility.readInput(Integer.class);
+
+                    switch (option) {
+                        case 1:
+                            System.out.println("새로운 이름을 입력하세요:");
+                            name = getValidatedName();
+                            break;
+                        case 2:
+                            System.out.println("새로운 입사월을 입력하세요:");
+                            enterMonth = getValidateEnterMonth();
+                            break;
+                        case 3:
+                            System.out.println("새로운 입사년도를 입력하세요:");
+                            enterYear = getValidateEnterYear();
+                            break;
+                        case 4:
+                            System.out.println("새로운 입사일을 입력하세요:");
+                            int newYear = getValidateEnterYear();
+                            int newMonth = getValidateEnterMonth();
+                            enterDay = getValidateEnterDay(newYear, newMonth);
+                            break;
+                        case 5:
+                            System.out.println("새로운 직급을 입력하세요:");
+                            roleStr = Utility.readInput(String.class); // 문자열
+                            break;
+                        case 6:
+                            System.out.println("새로운 비서번호를 입력하세요:");
+                            secnoStr = Utility.readInput(String.class); // 문자열
+                            break;
+                        case 7:
+                            System.out.println("새로운 급여를 입력하세요:");
+                            salary = Utility.readInput(Integer.class);
+                            break;
+                        default:
+                            System.out.println("잘못된 옵션입니다.");
+                            break;
+                    }
+
+                    Employee updateEmployee = new Employee(eno, name, enterYear, enterMonth, enterDay, roleStr, secnoStr, salary , 0);
+                    controller.selectUpdateEmployee(updateEmployee);
                     break;
                 case 0: // 직원 시스템 종료 후 메인 메뉴로 복귀
                     System.out.println("직원 시스템을 종료합니다.");

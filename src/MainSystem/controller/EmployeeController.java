@@ -82,4 +82,8 @@ public class EmployeeController {
         }
     }
 
+    public void selectUpdateEmployee(Employee employee) {
+        employeeManager.selectUpdateEmployee(employee);
+    }
+
 }

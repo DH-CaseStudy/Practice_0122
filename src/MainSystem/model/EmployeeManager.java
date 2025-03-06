@@ -55,4 +55,8 @@ public class EmployeeManager {
     public List<Employee> getUnassignedSecretaries() {
         return employeeDBIO.getUnassignedSecretaries();
     }
+
+    public boolean selectUpdateEmployee(Employee employee){
+        return employeeDBIO.selectUpdateEmployee(employee);
+    }
 }
