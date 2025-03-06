@@ -59,7 +59,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
         String eno = employee.getEno();
 
         Employee existing = getEmployeeById(eno);
-        if (existing == null) {
+        if (existing == null) { // 독립적 검증
             System.out.println("업데이트 실패: 해당 사번의 직원이 존재하지 않습니다.");
             return false;
         }
@@ -67,10 +67,10 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
         String column = null;
         String newValue = null;
 
-        if (employee.getName() != null && !employee.getName().isEmpty()) {
+        if (employee.getName() != null && !employee.getName().isEmpty()) { // 문자열이 비어있지 않은지 확인하는 표현식
             column = "name";
             newValue = employee.getName();
-        } else if (employee.getEnterYear() != 0) {
+        } else if (employee.getEnterYear() != 0) { // 0이 아닌 원래 값이 들어있으면 업데이트 하자
             column = "enteryear";
             newValue = Integer.toString(employee.getEnterYear());
         } else if (employee.getEnterMonth() != 0) {
@@ -98,7 +98,7 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            if (column.equals("enteryear") || column.equals("entermonth") ||
+            if (column.equals("enteryear") || column.equals("entermonth") || // 정수형이 들어왔을때 newValue에 정수형으로 받아 오기 위해.
                     column.equals("enterday") || column.equals("salary")) {
                 pstmt.setInt(1, Integer.parseInt(newValue));
             } else {
