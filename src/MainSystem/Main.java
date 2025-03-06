@@ -55,6 +55,7 @@ public class Main {
             System.out.println("3. 사번으로 조회");
             System.out.println("4. 이름으로 조회");
             System.out.println("5. 직군별 검색");
+            System.out.println("6. 사원별 업데이트");
             System.out.println("0. 직원 시스템 종료");
             System.out.print("원하는 번호를 입력하세요: ");
 
