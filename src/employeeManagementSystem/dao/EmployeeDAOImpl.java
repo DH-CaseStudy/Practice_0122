@@ -7,6 +7,8 @@ import java.math.RoundingMode;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
     private static final String URL = "jdbc:mysql://localhost:3306/ssgdb?serverTimezone=Asia/Seoul";
@@ -96,6 +98,36 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             pstmt.executeUpdate();
         }
     }
+
+    public List<Employee> getUnassignedSecretaries() throws SQLException {
+        List<Employee> secretaries = new ArrayList<>();
+        String sql = "SELECT * FROM Employee " +
+                     "WHERE role = 'Secretary' " +
+                     "AND eno NOT IN (" +
+                     "   SELECT secno FROM Employee WHERE role = 'Manager' AND secno IS NOT NULL" +
+                     ")";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+             while (rs.next()) {
+                 Employee emp = new Employee(
+                     rs.getString("eno"),
+                     rs.getString("name"),
+                     rs.getInt("enteryear"),
+                     rs.getInt("entermonth"),
+                     rs.getInt("enterday"),
+                     rs.getString("role"),
+                     rs.getString("secno"),
+                     rs.getBigDecimal("salary")
+                 );
+                 secretaries.add(emp);
+             }
+        }
+        return secretaries;
+    }
+
 
     @Override
     public BigDecimal getCurrentMonthlySalary(String eno) throws SQLException {

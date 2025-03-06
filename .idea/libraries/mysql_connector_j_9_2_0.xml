@@ -2,6 +2,7 @@
   <library name="mysql-connector-j-9.2.0">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../library/mysql-connector-j-9.2.0/mysql-connector-j-9.2.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/json-simple-1.1.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
