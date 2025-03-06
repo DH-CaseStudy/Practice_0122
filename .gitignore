@@ -27,3 +27,12 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# IntelliJ 설정 폴더 제외
+.idea/
+
+# 데이터 소스 관련 파일 제외
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.local.xml
+.idea/dataSources.xml
