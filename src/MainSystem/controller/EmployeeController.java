@@ -67,6 +67,11 @@ public class EmployeeController {
         employeeView.displayEmployees(employees);
     }
 
+    public void getUnassignedSecretaries(){
+        List<Employee> employees = employeeManager.getUnassignedSecretaries();
+        employeeView.displayEmployees(employees);
+    }
+
 
     public void updateSalary() throws SQLException {
         EmployeeDBIO employeeDBIO = new EmployeeDBIO();
@@ -76,4 +81,5 @@ public class EmployeeController {
             payRaiseRate.applyRaise(employee);
         }
     }
+
 }

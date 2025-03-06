@@ -51,4 +51,8 @@ public class EmployeeManager {
     public List<Employee> searchEmployeesByRole(String role) {
         return employeeDBIO.searchEmployeesByRole(role);
     }
+
+    public List<Employee> getUnassignedSecretaries() {
+        return employeeDBIO.getUnassignedSecretaries();
+    }
 }

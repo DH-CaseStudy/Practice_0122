@@ -93,6 +93,7 @@ public class Main {
                             controller.addEmployee(new Staff(eno, name, enterYear, enterMonth, enterDay, salary, lastRaiseYear));
                             break;
                         case 2:
+                            controller.getUnassignedSecretaries();
                             System.out.println("비서의 직원 번호를 입력하세요.");
                             String secno = Utility.readInput(String.class);
                             controller.addEmployee(new Manager(eno, name, enterYear, enterMonth, enterDay, secno, salary, lastRaiseYear));

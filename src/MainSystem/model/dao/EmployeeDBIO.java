@@ -211,4 +211,39 @@ public class EmployeeDBIO extends ObjectIO implements EmployeeIO {
         return employees;
     }
 
+    @Override
+    public List<Employee> getUnassignedSecretaries()  {
+        List<Employee> secretaries = new ArrayList<>();
+        String sql = "SELECT * FROM Employee " +
+                "WHERE role = 'Secretary' " +
+                "AND eno NOT IN (" +
+                "   SELECT secno FROM Employee WHERE role = 'Manager' AND secno IS NOT NULL" +
+                ")";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Employee emp = new Employee(
+                        rs.getString("eno"),
+                        rs.getString("name"),
+                        rs.getInt("enteryear"),
+                        rs.getInt("entermonth"),
+                        rs.getInt("enterday"),
+                        rs.getString("role"),
+                        rs.getString("secno"),
+                        rs.getInt("salary"),
+                        rs.getInt("lastRaiseYear")
+                );
+                secretaries.add(emp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return secretaries;
+    }
+
 }
