@@ -86,4 +86,10 @@ public class EmployeeController {
         employeeManager.selectUpdateEmployee(employee);
     }
 
+    public List<Employee> listAllEmployees_view() {//직원 아이디 중복여부를 파악하기 위한 함수
+        List<Employee> employees = employeeManager.getAllEmployees();
+        //employeeView.displayEmployees(employees);
+        return employees;
+    }
+
 }

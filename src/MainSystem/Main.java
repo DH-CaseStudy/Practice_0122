@@ -13,6 +13,8 @@ import MainSystem.view.EmployeeView;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
 
@@ -63,8 +65,29 @@ public class Main {
 
             switch (input) {
                 case 1: // 직원 입력
-                    System.out.println("직원 번호를 입력하세요.");
-                    String eno = getValidatedNumber();
+                    System.out.println("직원 번호를 입력하세요.범위(0-999)");
+                    System.out.println("입력 예시 1. Staff일 경우 -> S(0-999) " +
+                            "2. Manager일 경우 -> M(0-999)" +
+                            " 3. Secretary일 경우 -> SEC(0-999)  ");
+                    String eno = "";
+                    List<Employee> employees_view = controller.listAllEmployees_view();// 종복확인용 리스트
+
+                    while (true) {
+                        eno = getValidatedNumber1();
+                        boolean isDuplicate = false;
+                        for (Employee e : employees_view) {
+                            // 문자열 비교는 equals() 사용
+                            if (e.getEno().equals(eno)) {
+                                System.out.println("중복된 직원 번호입니다. 다시 입력해주세요.");
+                                isDuplicate = true;
+                                break;
+                            }
+                        }
+                        // 중복이 아니면 while문 탈출
+                        if (!isDuplicate) {
+                            break;
+                        }
+                    }
 
                     System.out.println("직원 이름을 입력하세요.");
                     String name = getValidatedName();
@@ -377,5 +400,46 @@ public class Main {
         if (average >= 70) return "C";
         if (average >= 60) return "D";
         return "F";
+    }
+
+    private static String getValidatedNumber1() {
+        List<String> JobTYpe = Arrays.asList("M", "SEC", "S");
+        System.out.println("직원 번호를 형식에 맞게 입력하세요.");
+
+        while (true) {
+            String sno = Utility.readInput(String.class);
+
+            // 문자와 숫자 분리
+            String letters = sno.replaceAll("[0-9]", ""); // 문자만 남김
+            String numbers = sno.replaceAll("[^0-9]", ""); // 숫자만 남김
+
+            // 숫자 부분을 int형으로 변환 (빈 문자열일 경우 예외 발생 방지)
+            if (numbers.isEmpty()) {
+                System.out.println("숫자가 포함되지 않았습니다. 다시 입력하세요.");
+                continue;
+            }
+
+            String letters1 = letters.toUpperCase();
+            int numericValue = Integer.parseInt(numbers);
+
+            // 직원 번호 유효성 검사 (S, Sec, M 중 하나 + 최대 3자리 숫자)
+            if ((letters1.equals("S") || letters1.equals("SEC") || letters1.equals("M"))
+                    && numbers.length() > 0 && numbers.length() < 4) {
+                return sno;
+            }
+            else if((!JobTYpe.contains(letters1)) && ( numbers.length() >= 4)){
+                System.out.println("직업유형이 맞지 않고,숫자범위를 벗어났습니다. ");
+            }
+            //->직업식별번호 ,숫자범위를 초과했습니다
+
+            else if((JobTYpe.contains(letters1) && (numbers.length() < 0 || numbers.length() >= 4))){
+                System.out.println("직업유형은 맞고 , 숫자범위를 벗어났습니다.");
+            }
+            else if(!JobTYpe.contains(letters1)){
+                System.out.println("숫자범위는 들어가지만 직업유형이 맞지 않습니다");
+            }
+
+            System.out.println("다시 입력해주세요.");
+        }
     }
 }
