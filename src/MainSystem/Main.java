@@ -1,6 +1,7 @@
 package MainSystem;
 
 import MainSystem.controller.EmployeeController;
+import MainSystem.model.Employee;
 import MainSystem.model.Manager;
 import MainSystem.model.Secretary;
 import MainSystem.model.Staff;
@@ -60,8 +61,29 @@ public class Main {
 
             switch (input) {
                 case 1: // 직원 입력
-                    System.out.println("직원 번호를 입력하세요.");
-                    String eno = getValidatedNumber1();
+                    System.out.println("직원 번호를 입력하세요.범위(0-999)");
+                    System.out.println("입력 예시 1. Staff일 경우 -> S(0-999) " +
+                            "2. Manager일 경우 -> M(0-999)" +
+                            " 3. Secretary일 경우 -> SEC(0-999)  ");
+                    String eno = "";
+                    List<Employee> employees_view = controller.listAllEmployees_view();// 종복확인용 리스트
+
+                    while (true) {
+                        eno = getValidatedNumber1();
+                        boolean isDuplicate = false;
+                        for (Employee e : employees_view) {
+                            // 문자열 비교는 equals() 사용
+                            if (e.getEno().equals(eno)) {
+                                System.out.println("중복된 직원 번호입니다. 다시 입력해주세요.");
+                                isDuplicate = true;
+                                break;
+                            }
+                        }
+                        // 중복이 아니면 while문 탈출
+                        if (!isDuplicate) {
+                            break;
+                        }
+                    }
 
                     System.out.println("직원 이름을 입력하세요.");
                     String name = getValidatedName();
@@ -85,7 +107,9 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("비서의 직원 번호를 입력하세요.");
-                            String secno = Utility.readInput(String.class);
+                            //String secno = Utility.readInput(String.class);
+                            String secno = " ";
+
                             controller.addEmployee(new Manager(eno, name, enterYear, enterMonth, enterDay, secno, salary));
                             break;
                         case 3:
@@ -232,7 +256,7 @@ public class Main {
             }
 
             String letters1 = letters.toUpperCase();
-            int numericValue = Integer.parseInt(numbers);
+            //int numericValue = Integer.parseInt(numbers);
 
             // 직원 번호 유효성 검사 (S, Sec, M 중 하나 + 최대 3자리 숫자)
             if ((letters1.equals("S") || letters1.equals("SEC") || letters1.equals("M"))
