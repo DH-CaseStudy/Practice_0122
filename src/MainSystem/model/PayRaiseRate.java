@@ -6,10 +6,18 @@ import MainSystem.model.dao.EmployeeDBIO;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
+/**
+ * 직원의 연봉 인상을 관리하는 클래스입니다.
+ * 직원의 근무 연차에 따라 특정 기준을 충족하면 연봉이 자동으로 인상됩니다.
+ */
 public class PayRaiseRate {
     private EmployeeDBIO employeeDBIO = new EmployeeDBIO();
-
+    /**
+     * 직원의 연봉을 인상하는 메서드입니다.
+     *
+     * @param employee 연봉 인상을 적용할 직원 객체
+     * @throws SQLException 데이터베이스 업데이트 중 오류 발생 시 예외 처리
+     */
     public void applyRaise(Employee employee) throws SQLException {
         double oldSalary = employee.getSalary();
         double newSalary = oldSalary;
@@ -33,7 +41,13 @@ public class PayRaiseRate {
 
         }
     }
-
+    /**
+     * 직원의 직급과 근무 연차에 따라 연봉 인상률을 반환하는 메서드입니다.
+     *
+     * @param role 직원의 직급 (Manager, Staff, Secretary)
+     * @param yearsWorked 직원의 근무 연차
+     * @return 연봉 인상 비율 (예: 0.10 = 10% 인상)
+     */
     private double getRaiseRate(String role, int yearsWorked) {
         switch (role) {
             case "Manager":

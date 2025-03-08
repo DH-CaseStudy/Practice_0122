@@ -48,16 +48,12 @@ public class Main {
     private static void employeeSystem() throws SQLException, ClassNotFoundException {
         EmployeeView view = new EmployeeView();
         EmployeeController controller = new EmployeeController(view);
-        controller.updateSalary();
 
         while (true) {
             System.out.println("\n--- 직원 시스템 ---");
             System.out.println("1. 입력");
-            System.out.println("2. 전체 조회");
-            System.out.println("3. 사번으로 조회");
-            System.out.println("4. 이름으로 조회");
-            System.out.println("5. 직군별 검색");
-            System.out.println("6. 정보 수정");
+            System.out.println("2. 조회");
+            System.out.println("3. 정보 수정");
             System.out.println("0. 직원 시스템 종료");
             System.out.print("원하는 번호를 입력하세요: ");
 
@@ -131,39 +127,48 @@ public class Main {
                             break;
                     }
                     break;
-                case 2: // 전체 조회
+                case 2:
                     controller.updateSalary();
-                    controller.listAllEmployees();
-                    break;
-                case 3: // 사번으로 조회
-                    System.out.println("조회하고자 하는 사번을 입력하세요.");
-                    String employeeNum = Utility.readInput(String.class);
-                    controller.getEmployeeById(employeeNum);
-                    break;
-                case 4: // 이름으로 조회
-                    System.out.println("조회하고자 하는 직원의 이름을 입력하세요.");
-                    String employeeName = Utility.readInput(String.class);
-                    controller.searchEmployeeByName(employeeName);
-                    break;
-                case 5: // 직군별 검색
-                    System.out.println("조회하고자 하는 직군을 선택하세요.");
-                    System.out.println("1. 직원, 2. 임원, 3. 비서");
-                    String employeeRole = Utility.readInput(String.class);
-                    switch (employeeRole) {
-                        case "1":
-                            controller.searchEmployeesByRole("Staff");
+                    System.out.println("1. 전체 조회");
+                    System.out.println("2. 사번으로 조회");
+                    System.out.println("3. 이름으로 조회");
+                    System.out.println("4. 직군별 검색");
+                    int submenu = Utility.readInput(Integer.class);
+                    switch (submenu){
+                        case 1: // 전체 조회
+                            controller.listAllEmployees();
                             break;
-                        case "2":
-                            controller.searchEmployeesByRole("Manager");
+                        case 2: // 사번으로 조회
+                            System.out.println("조회하고자 하는 사번을 입력하세요.");
+                            String employeeNum = Utility.readInput(String.class);
+                            controller.getEmployeeById(employeeNum);
                             break;
-                        case "3":
-                            controller.searchEmployeesByRole("Secretary");
+                        case 3: // 이름으로 조회
+                            System.out.println("조회하고자 하는 직원의 이름을 입력하세요.");
+                            String employeeName = Utility.readInput(String.class);
+                            controller.searchEmployeeByName(employeeName);
                             break;
-                        default:
-                            System.out.println("잘못 입력하셨습니다.");
+                        case 4: // 직군별 검색
+                            System.out.println("조회하고자 하는 직군을 선택하세요.");
+                            System.out.println("1. 직원, 2. 임원, 3. 비서");
+                            String employeeRole = Utility.readInput(String.class);
+                            switch (employeeRole) {
+                                case "1":
+                                    controller.searchEmployeesByRole("Staff");
+                                    break;
+                                case "2":
+                                    controller.searchEmployeesByRole("Manager");
+                                    break;
+                                case "3":
+                                    controller.searchEmployeesByRole("Secretary");
+                                    break;
+                                default:
+                                    System.out.println("잘못 입력하셨습니다.");
+                            }
+                            break;
                     }
                     break;
-                case 6: // 업데이트
+                case 3: // 업데이트
                     System.out.println("업데이트할 직원의 사번을 입력하세요:");
                     eno = Utility.readInput(String.class);
 
